@@ -1,0 +1,39 @@
+============================================================
+LEX FRIDMAN PODCAST - TRANSCRIPT AVAILABILITY REPORT
+============================================================
+Generated: January 2026
+Verified: Complete scan of all 488 episodes
+
+SUMMARY
+-------
+Total episodes on website: 488
+Transcripts available:     106 (22%)
+No transcript available:   382 (78%)
+
+EPISODES WITH TRANSCRIPTS (106 total)
+-------------------------------------
+Range: #276 to #489 (with gaps)
+
+Main continuous runs:
+- #387-477 (91 episodes) - Most complete coverage
+- #479-489 (11 episodes) - Recent episodes
+
+Scattered earlier episodes:
+- #276, #318, #336, #385
+
+EPISODES WITHOUT TRANSCRIPTS
+-----------------------------
+- #1-275   (275 episodes) - Early episodes, no transcripts
+- #277-317 (41 episodes)
+- #319-335 (17 episodes)
+- #337-384 (48 episodes)
+- #386     (1 episode)
+- #478     (1 episode)
+
+NOTES
+-----
+- Transcripts are only available on lexfridman.com for ~22% of episodes
+- Coverage is best for episodes from late 2022 onwards (#387+)
+- Older episodes do not have transcripts published on the website
+- Some episodes have multiple guest appearances (e.g., Elon Musk #1-4)
+- All available transcripts have been downloaded to all_episode_transcripts/

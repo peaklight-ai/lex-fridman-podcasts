@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #0a0a0a;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#aaaaff", "font": {"color": "white"}, "id": "advice for young people", "label": "Advice For Young People", "shape": "dot", "size": 42, "title": "Advice For Young People\nAppears in 21 episodes\nCategory: personal"}, {"color": "#888888", "font": {"color": "white"}, "id": "episode highlight", "label": "Episode Highlight", "shape": "dot", "size": 32, "title": "Episode Highlight\nAppears in 16 episodes\nCategory: default"}, {"color": "#ff44ff", "font": {"color": "white"}, "id": "hope", "label": "Hope", "shape": "dot", "size": 30, "title": "Hope\nAppears in 15 episodes\nCategory: philosophy"}, {"color": "#ff44ff", "font": {"color": "white"}, "id": "mortality", "label": "Mortality", "shape": "dot", "size": 26, "title": "Mortality\nAppears in 13 episodes\nCategory: philosophy"}, {"color": "#00d4ff", "font": {"color": "white"}, "id": "war in ukraine", "label": "War In Ukraine", "shape": "dot", "size": 20, "title": "War In Ukraine\nAppears in 10 episodes\nCategory: ai"}, {"color": "#ff44ff", "font": {"color": "white"}, "id": "god", "label": "God", "shape": "dot", "size": 20, "title": "God\nAppears in 10 episodes\nCategory: philosophy"}, {"color": "#ff44ff", "font": {"color": "white"}, "id": "hope for the future", "label": "Hope For The Future", "shape": "dot", "size": 20, "title": "Hope For The Future\nAppears in 10 episodes\nCategory: philosophy"}, {"color": "#888888", "font": {"color": "white"}, "id": "aliens", "label": "Aliens", "shape": "dot", "size": 20, "title": "Aliens\nAppears in 10 episodes\nCategory: default"}, {"color": "#ff4444", "font": {"color": "white"}, "id": "donald trump", "label": "Donald Trump", "shape": "dot", "size": 18, "title": "Donald Trump\nAppears in 9 episodes\nCategory: politics"}, {"color": "#ff44ff", "font": {"color": "white"}, "id": "meaning of life", "label": "Meaning Of Life", "shape": "dot", "size": 16, "title": "Meaning Of Life\nAppears in 8 episodes\nCategory: philosophy"}, {"color": "#888888", "font": {"color": "white"}, "id": "elon musk", "label": "Elon Musk", "shape": "dot", "size": 14, "title": "Elon Musk\nAppears in 7 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "productivity", "label": "Productivity", "shape": "dot", "size": 14, "title": "Productivity\nAppears in 7 episodes\nCategory: default"}, {"color": "#ff44ff", "font": {"color": "white"}, "id": "origin of life", "label": "Origin Of Life", "shape": "dot", "size": 10, "title": "Origin Of Life\nAppears in 5 episodes\nCategory: philosophy"}, {"color": "#888888", "font": {"color": "white"}, "id": "religion", "label": "Religion", "shape": "dot", "size": 10, "title": "Religion\nAppears in 5 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "china", "label": "China", "shape": "dot", "size": 10, "title": "China\nAppears in 5 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "power", "label": "Power", "shape": "dot", "size": 10, "title": "Power\nAppears in 5 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "artificial general intelligence", "label": "Artificial General Intelligence", "shape": "dot", "size": 10, "title": "Artificial General Intelligence\nAppears in 5 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "joe rogan", "label": "Joe Rogan", "shape": "dot", "size": 10, "title": "Joe Rogan\nAppears in 5 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "corruption", "label": "Corruption", "shape": "dot", "size": 10, "title": "Corruption\nAppears in 5 episodes\nCategory: default"}, {"color": "#44ff44", "font": {"color": "white"}, "id": "consciousness", "label": "Consciousness", "shape": "dot", "size": 8, "title": "Consciousness\nAppears in 4 episodes\nCategory: science"}, {"color": "#888888", "font": {"color": "white"}, "id": "depression", "label": "Depression", "shape": "dot", "size": 8, "title": "Depression\nAppears in 4 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "conspiracy theories", "label": "Conspiracy Theories", "shape": "dot", "size": 8, "title": "Conspiracy Theories\nAppears in 4 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "programming", "label": "Programming", "shape": "dot", "size": 8, "title": "Programming\nAppears in 4 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "freedom", "label": "Freedom", "shape": "dot", "size": 8, "title": "Freedom\nAppears in 4 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "artificial intelligence", "label": "Artificial Intelligence", "shape": "dot", "size": 8, "title": "Artificial Intelligence\nAppears in 4 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "benjamin netanyahu", "label": "Benjamin Netanyahu", "shape": "dot", "size": 8, "title": "Benjamin Netanyahu\nAppears in 4 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "jiu jitsu", "label": "Jiu Jitsu", "shape": "dot", "size": 8, "title": "Jiu Jitsu\nAppears in 4 episodes\nCategory: default"}, {"color": "#ff4444", "font": {"color": "white"}, "id": "politics", "label": "Politics", "shape": "dot", "size": 8, "title": "Politics\nAppears in 4 episodes\nCategory: politics"}, {"color": "#888888", "font": {"color": "white"}, "id": "education", "label": "Education", "shape": "dot", "size": 8, "title": "Education\nAppears in 4 episodes\nCategory: default"}, {"color": "#ff4444", "font": {"color": "white"}, "id": "israel-palestine", "label": "Israel-Palestine", "shape": "dot", "size": 8, "title": "Israel-Palestine\nAppears in 4 episodes\nCategory: politics"}, {"color": "#ff4444", "font": {"color": "white"}, "id": "jon stewart", "label": "Jon Stewart", "shape": "dot", "size": 8, "title": "Jon Stewart\nAppears in 4 episodes\nCategory: politics"}, {"color": "#888888", "font": {"color": "white"}, "id": "open source", "label": "Open Source", "shape": "dot", "size": 8, "title": "Open Source\nAppears in 4 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "scaling laws", "label": "Scaling Laws", "shape": "dot", "size": 8, "title": "Scaling Laws\nAppears in 4 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "doge", "label": "Doge", "shape": "dot", "size": 8, "title": "Doge\nAppears in 4 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "fermi paradox", "label": "Fermi Paradox", "shape": "dot", "size": 6, "title": "Fermi Paradox\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "twitter", "label": "Twitter", "shape": "dot", "size": 6, "title": "Twitter\nAppears in 3 episodes\nCategory: default"}, {"color": "#00d4ff", "font": {"color": "white"}, "id": "ai safety", "label": "Ai Safety", "shape": "dot", "size": 6, "title": "Ai Safety\nAppears in 3 episodes\nCategory: ai"}, {"color": "#888888", "font": {"color": "white"}, "id": "prompt engineering", "label": "Prompt Engineering", "shape": "dot", "size": 6, "title": "Prompt Engineering\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "hate", "label": "Hate", "shape": "dot", "size": 6, "title": "Hate\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "peace", "label": "Peace", "shape": "dot", "size": 6, "title": "Peace\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "suffering", "label": "Suffering", "shape": "dot", "size": 6, "title": "Suffering\nAppears in 3 episodes\nCategory: default"}, {"color": "#ffaa00", "font": {"color": "white"}, "id": "hitler", "label": "Hitler", "shape": "dot", "size": 6, "title": "Hitler\nAppears in 3 episodes\nCategory: history"}, {"color": "#888888", "font": {"color": "white"}, "id": "hamas", "label": "Hamas", "shape": "dot", "size": 6, "title": "Hamas\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "language", "label": "Language", "shape": "dot", "size": 6, "title": "Language\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "fame", "label": "Fame", "shape": "dot", "size": 6, "title": "Fame\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "future of humanity", "label": "Future Of Humanity", "shape": "dot", "size": 6, "title": "Future Of Humanity\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "human nature", "label": "Human Nature", "shape": "dot", "size": 6, "title": "Human Nature\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "north korea", "label": "North Korea", "shape": "dot", "size": 6, "title": "North Korea\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "father", "label": "Father", "shape": "dot", "size": 6, "title": "Father\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "p(doom)", "label": "P(Doom)", "shape": "dot", "size": 6, "title": "P(Doom)\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "kardashev scale", "label": "Kardashev Scale", "shape": "dot", "size": 6, "title": "Kardashev Scale\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "jeff bezos", "label": "Jeff Bezos", "shape": "dot", "size": 6, "title": "Jeff Bezos\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "oct 7", "label": "Oct 7", "shape": "dot", "size": 6, "title": "Oct 7\nAppears in 3 episodes\nCategory: default"}, {"color": "#ff4444", "font": {"color": "white"}, "id": "trump", "label": "Trump", "shape": "dot", "size": 6, "title": "Trump\nAppears in 3 episodes\nCategory: politics"}, {"color": "#888888", "font": {"color": "white"}, "id": "putin", "label": "Putin", "shape": "dot", "size": 6, "title": "Putin\nAppears in 3 episodes\nCategory: default"}, {"color": "#ff4444", "font": {"color": "white"}, "id": "nuclear war", "label": "Nuclear War", "shape": "dot", "size": 6, "title": "Nuclear War\nAppears in 3 episodes\nCategory: politics"}, {"color": "#888888", "font": {"color": "white"}, "id": "immigration", "label": "Immigration", "shape": "dot", "size": 6, "title": "Immigration\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "bernie sanders", "label": "Bernie Sanders", "shape": "dot", "size": 6, "title": "Bernie Sanders\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "general relativity", "label": "General Relativity", "shape": "dot", "size": 6, "title": "General Relativity\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "ayahuasca", "label": "Ayahuasca", "shape": "dot", "size": 6, "title": "Ayahuasca\nAppears in 3 episodes\nCategory: default"}, {"color": "#00d4ff", "font": {"color": "white"}, "id": "future of ai", "label": "Future Of Ai", "shape": "dot", "size": 6, "title": "Future Of Ai\nAppears in 3 episodes\nCategory: ai"}, {"color": "#888888", "font": {"color": "white"}, "id": "jeffrey epstein", "label": "Jeffrey Epstein", "shape": "dot", "size": 6, "title": "Jeffrey Epstein\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "sam harris", "label": "Sam Harris", "shape": "dot", "size": 6, "title": "Sam Harris\nAppears in 3 episodes\nCategory: default"}, {"color": "#ff4444", "font": {"color": "white"}, "id": "world war ii", "label": "World War Ii", "shape": "dot", "size": 6, "title": "World War Ii\nAppears in 3 episodes\nCategory: politics"}, {"color": "#888888", "font": {"color": "white"}, "id": "censorship", "label": "Censorship", "shape": "dot", "size": 6, "title": "Censorship\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "apple", "label": "Apple", "shape": "dot", "size": 6, "title": "Apple\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "future of programming", "label": "Future Of Programming", "shape": "dot", "size": 6, "title": "Future Of Programming\nAppears in 3 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "inflation", "label": "Inflation", "shape": "dot", "size": 4, "title": "Inflation\nAppears in 2 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "panspermia", "label": "Panspermia", "shape": "dot", "size": 4, "title": "Panspermia\nAppears in 2 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "sex", "label": "Sex", "shape": "dot", "size": 4, "title": "Sex\nAppears in 2 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "violence", "label": "Violence", "shape": "dot", "size": 4, "title": "Violence\nAppears in 2 episodes\nCategory: default"}, {"color": "#ff44ff", "font": {"color": "white"}, "id": "day in the life", "label": "Day In The Life", "shape": "dot", "size": 4, "title": "Day In The Life\nAppears in 2 episodes\nCategory: philosophy"}, {"color": "#888888", "font": {"color": "white"}, "id": "self-doubt", "label": "Self-Doubt", "shape": "dot", "size": 4, "title": "Self-Doubt\nAppears in 2 episodes\nCategory: default"}, {"color": "#aaaaff", "font": {"color": "white"}, "id": "love", "label": "Love", "shape": "dot", "size": 4, "title": "Love\nAppears in 2 episodes\nCategory: personal"}, {"color": "#888888", "font": {"color": "white"}, "id": "eliezer yudkowsky", "label": "Eliezer Yudkowsky", "shape": "dot", "size": 4, "title": "Eliezer Yudkowsky\nAppears in 2 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "video games", "label": "Video Games", "shape": "dot", "size": 4, "title": "Video Games\nAppears in 2 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "andrej karpathy", "label": "Andrej Karpathy", "shape": "dot", "size": 4, "title": "Andrej Karpathy\nAppears in 2 episodes\nCategory: default"}, {"color": "#ff4444", "font": {"color": "white"}, "id": "2024 elections", "label": "2024 Elections", "shape": "dot", "size": 4, "title": "2024 Elections\nAppears in 2 episodes\nCategory: politics"}, {"color": "#888888", "font": {"color": "white"}, "id": "power and corruption", "label": "Power And Corruption", "shape": "dot", "size": 4, "title": "Power And Corruption\nAppears in 2 episodes\nCategory: default"}, {"color": "#888888", "font": {"color": "white"}, "id": "abraham accords", "label": "Abraham Accords", "shape": "dot", "size": 4, "title": "Abraham Accords\nAppears in 2 episodes\nCategory: default"}]);
+                  edges = new vis.DataSet([{"color": "#333333", "from": "advice for young people", "to": "episode highlight", "value": 3}, {"color": "#333333", "from": "advice for young people", "to": "mortality", "value": 5}, {"color": "#333333", "from": "advice for young people", "to": "meaning of life", "value": 5}, {"color": "#333333", "from": "advice for young people", "to": "elon musk", "value": 3}, {"color": "#333333", "from": "advice for young people", "to": "productivity", "value": 2}, {"color": "#333333", "from": "advice for young people", "to": "origin of life", "value": 2}, {"color": "#333333", "from": "advice for young people", "to": "conspiracy theories", "value": 2}, {"color": "#333333", "from": "advice for young people", "to": "twitter", "value": 3}, {"color": "#333333", "from": "advice for young people", "to": "suffering", "value": 2}, {"color": "#333333", "from": "advice for young people", "to": "hitler", "value": 2}, {"color": "#333333", "from": "advice for young people", "to": "p(doom)", "value": 2}, {"color": "#333333", "from": "advice for young people", "to": "sex", "value": 2}, {"color": "#333333", "from": "advice for young people", "to": "day in the life", "value": 2}, {"color": "#333333", "from": "advice for young people", "to": "love", "value": 2}, {"color": "#333333", "from": "episode highlight", "to": "hope", "value": 3}, {"color": "#333333", "from": "episode highlight", "to": "mortality", "value": 2}, {"color": "#333333", "from": "episode highlight", "to": "programming", "value": 2}, {"color": "#333333", "from": "episode highlight", "to": "scaling laws", "value": 2}, {"color": "#333333", "from": "episode highlight", "to": "hamas", "value": 2}, {"color": "#333333", "from": "episode highlight", "to": "p(doom)", "value": 2}, {"color": "#333333", "from": "episode highlight", "to": "sam harris", "value": 2}, {"color": "#333333", "from": "episode highlight", "to": "world war ii", "value": 2}, {"color": "#333333", "from": "episode highlight", "to": "future of programming", "value": 2}, {"color": "#333333", "from": "episode highlight", "to": "apple", "value": 2}, {"color": "#333333", "from": "hope", "to": "religion", "value": 2}, {"color": "#333333", "from": "hope", "to": "joe rogan", "value": 3}, {"color": "#333333", "from": "hope", "to": "north korea", "value": 2}, {"color": "#333333", "from": "hope", "to": "sam harris", "value": 2}, {"color": "#333333", "from": "hope", "to": "god", "value": 2}, {"color": "#333333", "from": "hope", "to": "donald trump", "value": 2}, {"color": "#333333", "from": "hope", "to": "elon musk", "value": 2}, {"color": "#333333", "from": "hope", "to": "conspiracy theories", "value": 2}, {"color": "#333333", "from": "hope", "to": "hamas", "value": 2}, {"color": "#333333", "from": "hope", "to": "bernie sanders", "value": 2}, {"color": "#333333", "from": "mortality", "to": "suffering", "value": 2}, {"color": "#333333", "from": "mortality", "to": "god", "value": 2}, {"color": "#333333", "from": "mortality", "to": "aliens", "value": 2}, {"color": "#333333", "from": "mortality", "to": "meaning of life", "value": 3}, {"color": "#333333", "from": "mortality", "to": "elon musk", "value": 2}, {"color": "#333333", "from": "mortality", "to": "kardashev scale", "value": 2}, {"color": "#333333", "from": "war in ukraine", "to": "god", "value": 3}, {"color": "#333333", "from": "war in ukraine", "to": "donald trump", "value": 2}, {"color": "#333333", "from": "war in ukraine", "to": "china", "value": 4}, {"color": "#333333", "from": "war in ukraine", "to": "benjamin netanyahu", "value": 2}, {"color": "#333333", "from": "war in ukraine", "to": "politics", "value": 2}, {"color": "#333333", "from": "war in ukraine", "to": "hate", "value": 2}, {"color": "#333333", "from": "war in ukraine", "to": "peace", "value": 2}, {"color": "#333333", "from": "war in ukraine", "to": "abraham accords", "value": 2}, {"color": "#333333", "from": "god", "to": "productivity", "value": 2}, {"color": "#333333", "from": "god", "to": "politics", "value": 2}, {"color": "#333333", "from": "god", "to": "aliens", "value": 2}, {"color": "#333333", "from": "god", "to": "elon musk", "value": 2}, {"color": "#333333", "from": "god", "to": "freedom", "value": 2}, {"color": "#333333", "from": "god", "to": "ayahuasca", "value": 2}, {"color": "#333333", "from": "hope for the future", "to": "aliens", "value": 2}, {"color": "#333333", "from": "hope for the future", "to": "benjamin netanyahu", "value": 2}, {"color": "#333333", "from": "aliens", "to": "meaning of life", "value": 2}, {"color": "#333333", "from": "aliens", "to": "origin of life", "value": 2}, {"color": "#333333", "from": "aliens", "to": "artificial general intelligence", "value": 2}, {"color": "#333333", "from": "aliens", "to": "consciousness", "value": 2}, {"color": "#333333", "from": "aliens", "to": "politics", "value": 2}, {"color": "#333333", "from": "aliens", "to": "general relativity", "value": 2}, {"color": "#333333", "from": "aliens", "to": "ayahuasca", "value": 2}, {"color": "#333333", "from": "donald trump", "to": "elon musk", "value": 2}, {"color": "#333333", "from": "donald trump", "to": "freedom", "value": 2}, {"color": "#333333", "from": "donald trump", "to": "education", "value": 3}, {"color": "#333333", "from": "donald trump", "to": "china", "value": 2}, {"color": "#333333", "from": "donald trump", "to": "corruption", "value": 4}, {"color": "#333333", "from": "donald trump", "to": "doge", "value": 2}, {"color": "#333333", "from": "meaning of life", "to": "programming", "value": 2}, {"color": "#333333", "from": "meaning of life", "to": "twitter", "value": 2}, {"color": "#333333", "from": "meaning of life", "to": "prompt engineering", "value": 2}, {"color": "#333333", "from": "meaning of life", "to": "suffering", "value": 2}, {"color": "#333333", "from": "meaning of life", "to": "elon musk", "value": 2}, {"color": "#333333", "from": "meaning of life", "to": "conspiracy theories", "value": 2}, {"color": "#333333", "from": "meaning of life", "to": "ai safety", "value": 3}, {"color": "#333333", "from": "meaning of life", "to": "eliezer yudkowsky", "value": 2}, {"color": "#333333", "from": "elon musk", "to": "jeff bezos", "value": 3}, {"color": "#333333", "from": "elon musk", "to": "future of ai", "value": 2}, {"color": "#333333", "from": "elon musk", "to": "corruption", "value": 2}, {"color": "#333333", "from": "origin of life", "to": "consciousness", "value": 2}, {"color": "#333333", "from": "china", "to": "power", "value": 2}, {"color": "#333333", "from": "joe rogan", "to": "conspiracy theories", "value": 2}, {"color": "#333333", "from": "joe rogan", "to": "jeffrey epstein", "value": 2}, {"color": "#333333", "from": "corruption", "to": "freedom", "value": 2}, {"color": "#333333", "from": "corruption", "to": "israel-palestine", "value": 2}, {"color": "#333333", "from": "corruption", "to": "doge", "value": 2}, {"color": "#333333", "from": "programming", "to": "scaling laws", "value": 2}, {"color": "#333333", "from": "programming", "to": "prompt engineering", "value": 2}, {"color": "#333333", "from": "freedom", "to": "doge", "value": 2}, {"color": "#333333", "from": "israel-palestine", "to": "putin", "value": 2}, {"color": "#333333", "from": "jon stewart", "to": "putin", "value": 2}, {"color": "#333333", "from": "open source", "to": "future of ai", "value": 2}, {"color": "#333333", "from": "open source", "to": "apple", "value": 2}, {"color": "#333333", "from": "scaling laws", "to": "prompt engineering", "value": 2}, {"color": "#333333", "from": "scaling laws", "to": "p(doom)", "value": 2}, {"color": "#333333", "from": "fermi paradox", "to": "kardashev scale", "value": 2}, {"color": "#333333", "from": "hate", "to": "peace", "value": 2}, {"color": "#333333", "from": "hate", "to": "hamas", "value": 2}, {"color": "#333333", "from": "jeff bezos", "to": "future of ai", "value": 2}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -3000,
+            "springConstant": 0.001,
+            "springLength": 200
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "promptDelete": false,
+  "alwaysUpdateLinks": true,
+  "newFileLocation": "current",
+  "attachmentFolderPath": "/",
+  "showLineNumber": true,
+  "spellcheck": true,
+  "useMarkdownLinks": false,
+  "showFrontmatter": true
+}
